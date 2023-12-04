@@ -1,7 +1,13 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps hereby
-local opts = { noremap = true, silent = true }
+-- dap-ui
+
+vim.api.nvim_set_keymap("n", "<leader>dt", ":DapUiToggle<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset= true})<CR>", { noremap = true })
+--
 vim.api.nvim_set_keymap(
   "n",
   "<Space>M",
@@ -157,18 +163,36 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("", "<leader>y", '"+y') -- E.g: <leader>yy will yank current line to os clipboard
 vim.keymap.set("", "<leader>Y", '"+y$')
 
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
+-- local mark = require("harpoon.mark")
+-- local ui = require("harpoon.ui")
 
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+-- vim.keymap.set("n", "<leader>a", mark.add_file)
+-- vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+--
+-- vim.keymap.set("n", "<C-n>", function()
+--   ui.nav_file(3)
+-- end)
+-- vim.keymap.set("n", "<C-s>", function()
+--   ui.nav_file(4)
+-- end)
+-- local mark = require("harpoon.mark")
+-- local ui = require("harpoon.ui")
 
-vim.keymap.set("n", "<C-n>", function()
-  ui.nav_file(3)
-end)
-vim.keymap.set("n", "<C-s>", function()
-  ui.nav_file(4)
-end)
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>a",
+  ":lua require('harpoon.mark').add_file()<CR>",
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-e>",
+  ":lua require('harpoon.ui').toggle_quick_menu()<CR>",
+  { noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap("n", "<C-n>", ":lua require('harpoon.ui').nav_file(3)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-s>", ":lua require('harpoon.ui').nav_file(4)<CR>", { noremap = true, silent = true })
 
 -- telescope---
 
